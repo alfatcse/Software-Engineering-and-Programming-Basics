@@ -160,6 +160,6 @@ public class Stemmer {
         System.out.println(getShared(houseNGrams,trousersNGrams));
         System.out.println(getDistance(houseNGrams,trousersNGrams));
         isRelevant("house","trousers");
-        isRelevant("house","the house is clean");
+
     }
 }
