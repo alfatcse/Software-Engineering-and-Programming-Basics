@@ -26,18 +26,30 @@ public class Stemmer {
                 if(i<range-1)
                     Ngram=Ngram+",";
             }
+            String[] words=Ngram.split(",");
+            return words;
         }
         else if(length==number)
         {
             Ngram=keyword;
+            String[] words=new String[1];
+            words[0]=Ngram;
+            return words;
         }
         else
         {
+            int asterisks=number-length;
+            String a=new String();
+            for(int z=0;z<asterisks;z++)
+            {
+                a=a+"*";
+            }
             Ngram=keyword;
-            Ngram=Ngram+"**";
+            Ngram=Ngram+a;
+            String[] words=new String[1];
+            words[0]=Ngram;
+            return words;
         }
-        String[] words=Ngram.split(",");
-        return words;
     }
     private static String convertStringArrayToString(String[] strArr, String delimiter) {
         StringBuilder sb = new StringBuilder();
@@ -169,7 +181,7 @@ public class Stemmer {
  return is_found;
     }
     public static void main(String[] args) {
-        String[] houseNGrams=getNGrams("house",3);
+        String[] houseNGrams=getNGrams("cat",3);
         String s=Arrays.toString(houseNGrams);
         System.out.println(s);
         String[] trousersNGrams =getNGrams("trousers",3);
