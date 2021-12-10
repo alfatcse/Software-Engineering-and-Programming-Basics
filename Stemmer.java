@@ -173,7 +173,7 @@ public class Stemmer {
         String s=Arrays.toString(houseNGrams);
         System.out.println(s);
         String[] trousersNGrams =getNGrams("trousers",3);
-        String s1=Arrays.toString(houseNGrams);
+        String s1=Arrays.toString(trousersNGrams);
         System.out.println(s1);
         String[] shared_Ngram=  getShared(houseNGrams,trousersNGrams);
         String s2=Arrays.toString(shared_Ngram);
