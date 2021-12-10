@@ -22,6 +22,11 @@ public class Stemmer {
                     Ngram=Ngram+",";
             }
         }
+        else
+        {
+            Ngram=keyword;
+            Ngram=Ngram+"**";
+        }
         return Ngram;
     }
     static public String getShared(String a,String b)
@@ -119,37 +124,26 @@ public class Stemmer {
     }
     static public String isRelevant(String a, String b)
     {
-        int j=b.length();
-        String[] second=new String[j];
-        int t=0,z=0;
-        for(int n=0;n<j;n++)
-        {
-            if(b.charAt(n)==' ')
+        String s1=b;
+        String is_found=new String();
+        String Ngram_a=getNGrams(a,3);
+        String[] words=s1.split("\\s");
+        for(String w:words){
+           if(w.length()>3)
             {
-               second[t]=b.substring(z,n);
-                z=n+1;
-                t++;
+                String Ngram_w=getNGrams(w,3);
+            double get_distance=getDistance(Ngram_a,Ngram_w);
+            if(get_distance>0.4)
+            {
+                is_found="true";
+                break;
+            }
+            else
+            {
+                is_found="false";
+            }
             }
         }
-       second[t]=b.substring(z,j);
-        int h=0;
-       String is_found=new String();
-        for(int y=0;y<=t;y++)
-        {
-                if (a!=null)
-                {
-                    if(second[y].equals(a))
-                    {
-                        is_found="true";
-                        break;
-                    }
-                    else
-                    {
-                        is_found= "false";
-                    }
-                }
-        }
-        System.out.println(is_found);
  return is_found;
     }
     public static void main(String[] args) {
@@ -159,7 +153,6 @@ public class Stemmer {
         System.out.println(trousersNGrams);
         System.out.println(getShared(houseNGrams,trousersNGrams));
         System.out.println(getDistance(houseNGrams,trousersNGrams));
-        isRelevant("house","trousers");
-
+        System.out.println(isRelevant("house","trousers"));
     }
 }
