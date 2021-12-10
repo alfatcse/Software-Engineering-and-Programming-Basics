@@ -1,6 +1,11 @@
 package assignment5;
+
+import java.util.Arrays;
+
+import static com.sun.javafx.fxml.expression.Expression.split;
+
 public class Stemmer {
-    static public String getNGrams(String keyword,int number)
+    static public String[] getNGrams(String keyword,int number)
     {
         int length=keyword.length();
         String Ngram= new String();
@@ -22,42 +27,55 @@ public class Stemmer {
                     Ngram=Ngram+",";
             }
         }
+        else if(length==number)
+        {
+            Ngram=keyword;
+        }
         else
         {
             Ngram=keyword;
             Ngram=Ngram+"**";
         }
-        return Ngram;
+        String[] words=Ngram.split(",");
+        return words;
     }
-    static public String getShared(String a,String b)
+    private static String convertStringArrayToString(String[] strArr, String delimiter) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : strArr)
+            sb.append(str).append(delimiter);
+        return sb.substring(0, sb.length() - 1);
+    }
+   static public String[] getShared(String[] a,String[] b)
     {
-        int i=a.length();
+        String str1 = convertStringArrayToString(a, ",");
+        String str2 = convertStringArrayToString(b, ",");
+      int i=str1.length();
         String[] first=new String[i];
         String shared=new String();
         int p=0,q=0;
         for(int m=0;m<i;m++)
         {
-         if(a.charAt(m)==',')
+         if(str1.charAt(m)==',')
           {
-              first[p]=a.substring(q,m);
+              first[p]=str1.substring(q,m);
               q=m+1;
               p++;
           }
         }
-        first[p]=a.substring(q,i);
-        int j=b.length();
+        first[p]=str1.substring(q,i);
+        int j=str2.length();
         String[] second=new String[j];
         int t=0,z=0;
         for(int n=0;n<j;n++)
         {
-            if(b.charAt(n)==',')
+            if(str2.charAt(n)==',')
             {
-                second[t]=b.substring(z,n);
+                second[t]=str2.substring(z,n);
                 z=n+1;
                 t++;
             }
         }
-        second[t]=b.substring(z,j);
+        second[t]=str2.substring(z,j);
         int h=0;
         for(int y=0;y<=t;y++)
         {
@@ -74,33 +92,36 @@ public class Stemmer {
               }
             }
         }
-        return shared;
+        String[] words=shared.split(",");
+        return words;
     }
-    static public double getDistance(String a,String b)
+   static public double getDistance(String[] a,String[] b)
     {
-        int i=a.length();
+        String str1 = convertStringArrayToString(a, ",");
+        String str2 = convertStringArrayToString(b, ",");
+        int i=str1.length();
         String[] first=new String[i];
         int n_gram_count_a=0;
         int p=0,q=0;
         for(int m=0;m<i;m++)
         {
-            if(a.charAt(m)==',')
+            if(str1.charAt(m)==',')
             {
-                first[p]=a.substring(q,m);
+                first[p]=str1.substring(q,m);
                 q=m+1;
                 p++;
                 n_gram_count_a=n_gram_count_a+1;
             }
         }
-        int j=b.length();
+        int j=str2.length();
         String[] second=new String[j];
         int t=0,z=0;
         int n_gram_count_b=0;
         for(int n=0;n<j;n++)
         {
-            if(b.charAt(n)==',')
+            if(str2.charAt(n)==',')
             {
-                second[t]=b.substring(z,n);
+                second[t]=str2.substring(z,n);
                 z=n+1;
                 t++;
                 n_gram_count_b=n_gram_count_b+1;
@@ -108,7 +129,8 @@ public class Stemmer {
         }
         n_gram_count_a=n_gram_count_a+1;
         n_gram_count_b=n_gram_count_b+1;
-        String matched_n_gram=getShared(a,b);
+        String[] x=getShared(a,b);
+        String  matched_n_gram= convertStringArrayToString(x, ",");
         int k=matched_n_gram.length();
         int n_gram_count_c=0;
         for(int n=0;n<k;n++)
@@ -126,12 +148,12 @@ public class Stemmer {
     {
         String s1=b;
         String is_found=new String();
-        String Ngram_a=getNGrams(a,3);
+       String[] Ngram_a=getNGrams(a,3);
         String[] words=s1.split("\\s");
         for(String w:words){
            if(w.length()>3)
             {
-                String Ngram_w=getNGrams(w,3);
+               String[] Ngram_w=getNGrams(w,3);
             double get_distance=getDistance(Ngram_a,Ngram_w);
             if(get_distance>0.4)
             {
@@ -147,11 +169,15 @@ public class Stemmer {
  return is_found;
     }
     public static void main(String[] args) {
-        String houseNGrams=getNGrams("house",3);
-        System.out.println(houseNGrams);
-        String trousersNGrams =getNGrams("trousers",3);
-        System.out.println(trousersNGrams);
-        System.out.println(getShared(houseNGrams,trousersNGrams));
+        String[] houseNGrams=getNGrams("house",3);
+        String s=Arrays.toString(houseNGrams);
+        System.out.println(s);
+        String[] trousersNGrams =getNGrams("trousers",3);
+        String s1=Arrays.toString(houseNGrams);
+        System.out.println(s1);
+        String[] shared_Ngram=  getShared(houseNGrams,trousersNGrams);
+        String s2=Arrays.toString(shared_Ngram);
+        System.out.println(s2);
         System.out.println(getDistance(houseNGrams,trousersNGrams));
         System.out.println(isRelevant("house","trousers"));
     }
