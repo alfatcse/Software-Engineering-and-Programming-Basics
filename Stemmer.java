@@ -1,9 +1,5 @@
 package assignment5;
-
 import java.util.Arrays;
-
-import static com.sun.javafx.fxml.expression.Expression.split;
-
 public class Stemmer {
     static public String[] getNGrams(String keyword,int number)
     {
@@ -61,7 +57,7 @@ public class Stemmer {
     {
         String str1 = convertStringArrayToString(a, ",");
         String str2 = convertStringArrayToString(b, ",");
-      int i=str1.length();
+        int i=str1.length();
         String[] first=new String[i];
         String shared=new String();
         int p=0,q=0;
@@ -160,12 +156,12 @@ public class Stemmer {
     {
         String s1=b;
         String is_found=new String();
-       String[] Ngram_a=getNGrams(a,3);
+        String[] Ngram_a=getNGrams(a,3);
         String[] words=s1.split("\\s");
         for(String w:words){
            if(w.length()>3)
             {
-               String[] Ngram_w=getNGrams(w,3);
+                String[] Ngram_w=getNGrams(w,3);
             double get_distance=getDistance(Ngram_a,Ngram_w);
             if(get_distance>0.4)
             {
@@ -181,7 +177,7 @@ public class Stemmer {
  return is_found;
     }
     public static void main(String[] args) {
-        String[] houseNGrams=getNGrams("cat",3);
+        String[] houseNGrams=getNGrams("house",3);
         String s=Arrays.toString(houseNGrams);
         System.out.println(s);
         String[] trousersNGrams =getNGrams("trousers",3);
@@ -191,6 +187,6 @@ public class Stemmer {
         String s2=Arrays.toString(shared_Ngram);
         System.out.println(s2);
         System.out.println(getDistance(houseNGrams,trousersNGrams));
-        System.out.println(isRelevant("house","trousers"));
+        System.out.println(isRelevant("house","the house is clean"));
     }
 }
