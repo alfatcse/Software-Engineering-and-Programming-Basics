@@ -1,5 +1,4 @@
 package assignment5;
-import java.util.Arrays;
 public class Stemmer {
     static public String[] getNGrams(String keyword,int number)
     {
@@ -178,14 +177,35 @@ public class Stemmer {
     }
     public static void main(String[] args) {
         String[] houseNGrams=getNGrams("house",3);
-        String s=Arrays.toString(houseNGrams);
-        System.out.println(s);
+        for(int i=0;i<=houseNGrams.length-1;i++)
+        {
+            System.out.print(houseNGrams[i]);
+            if(i<houseNGrams.length-1)
+            {
+                System.out.print(",");
+            }
+        }
+        System.out.println();
         String[] trousersNGrams =getNGrams("trousers",3);
-        String s1=Arrays.toString(trousersNGrams);
-        System.out.println(s1);
+        for(int i=0;i<=trousersNGrams.length-1;i++)
+        {
+            System.out.print(trousersNGrams[i]);
+            if(i<trousersNGrams.length-1)
+            {
+                System.out.print(",");
+            }
+        }
+        System.out.println();
         String[] shared_Ngram=  getShared(houseNGrams,trousersNGrams);
-        String s2=Arrays.toString(shared_Ngram);
-        System.out.println(s2);
+        for(int i=0;i<=shared_Ngram.length-1;i++)
+        {
+            System.out.print(shared_Ngram[i]);
+            if(i<shared_Ngram.length-1)
+            {
+                System.out.print(",");
+            }
+        }
+        System.out.println();
         System.out.println(getDistance(houseNGrams,trousersNGrams));
         System.out.println(isRelevant("house","the house is clean"));
     }
